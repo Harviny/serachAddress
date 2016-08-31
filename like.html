@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>like</title>
+    <style>
+        body{
+            padding-top: 30px;;
+            display: flex;
+            justify-content: center;
+            flex-flow:row wrap;
+            align-items: center;
+            width: 1100px;
+        }
+        body>div{
+            margin-top: 30px;
+            width:100px;
+            height: 70px;
+            margin-left: 30px;
+        }
+        .p1{
+            background:yellowgreen;
+            box-shadow: 0 0 0 1px, 0 0 0 15px deeppink;
+        }
+        .p2{
+            background:linear-gradient(45deg,#fb3 25%,#58a 0,#58a 50%,#fb3 0, #fb3 75%,#58a 0);
+            background-size: 30px 30px;
+        }
+        .p3{
+            background: linear-gradient(#fb3,#68a);
+        }
+        .p3::after{
+            content:"呵呵";
+        }
+        .p4{
+            background: #655;
+            background-image: radial-gradient(tan 30% , transparent 0),radial-gradient(tan 30% ,transparent 0);
+            background-size: 30px 30px;
+            background-position: 0 0 ,15px 15px;
+            cursor:none;
+        }
+        .p5{
+            width:100px;
+            height: 70px;
+            background: #eee;
+            background-image: linear-gradient(45deg,#bbb 25% ,transparent 0),
+                              linear-gradient(45deg,transparent 75% ,#bbb 0),
+                              linear-gradient(45deg,#bbb 25% ,transparent 0),
+                              linear-gradient(45deg,transparent 75% ,#bbb 0);
+            background-position: 0 0, 15px 15px,15px 15px ,30px 30px;
+            background-size: 30px 30px;
+            cursor: help;
+        }
+        .p6{
+            margin-left: 60px;
+            margin-right: 30px;
+            background-color: #655;
+            transform: skew(-45deg);
+            cursor: not-allowed;
+        }
+        .p7{
+            background-color: #58a;
+            background: linear-gradient(-135deg,transparent 1em,#58a 0);
+
+        }
+        .p7-1{
+            margin-left: -90px;
+            margin-top: 10px;
+            background: linear-gradient(to left bottom,transparent 65% , rgba(0,0,0,.4) 0) no-repeat 100% 0/2em 2em;
+        }
+        .p8{
+            display: block;
+        }
+        .p8>input[type="checkbox"],.p8>label{
+           text-indent: 0.15em;
+        }
+        .p9>input[type="checkbox"] {
+            position:absolute;
+            clip:rect(0,0,0,0)
+        }
+
+        .p9>input[type="checkbox"] ,.p9>label{
+            display: inline-block;
+            padding:.3em .5em;
+            background: #ccc;
+            background-image: linear-gradient(#ddd,#bbb);
+            border:1px solid rgba(0,0,0,.2);
+            border-radius:.3em;
+            box-shadow: 0 1px white inset;
+            text-align: center;
+            text-shadow: 0 1px 1px white;
+        }
+
+        .p9>input[type="checkbox"]:active,.p9>label:active{
+            box-shadow: .05em .1em .2em rgba(0,0,0,.6) inset;
+            border-color:rgba(0,0,0,.3);
+            background: #bbb;
+        }
+
+    </style>
+</head>
+<body>
+   <div class="p1"></div>
+   <div class="p2"></div>
+   <div class="p3"></div>
+   <div class="p4"></div>
+   <div class="p5"></div>
+   <div class="p6"></div>
+   <div class="p7"></div>
+   <div class="p7-1"></div><br>
+   <div class="p8">
+       <input type="checkbox" id="awesome">
+       <label for="awesome"> Awesome</label>
+   </div>
+   <div class="p9">
+       <input type="checkbox" id="button">
+       <label for="button"> button</label>
+   </div>
+</body>
+</html>

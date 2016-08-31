@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";font-size:14px;}
+        #l-map{height:300px;width:100%;}
+        #r-result{width:100%;}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=LCI3MPHPPmKHWHnt6GMjqK7B"></script>
+    <title>搜索</title>
+    <style>
+        #r-result{
+            margin-top: 20px;
+            margin-bottom: 15px;
+            line-height: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            width:100%;
+        }
+        #r-result input[type='text']{
+           height: 25px;
+           line-height: 25px;
+           width: 70%;
+           border:solid 1px #AAAAAA;
+           padding-left:5px;
+           outline: none;
+           color:#888;
+        }
+        #r-result input[type='text']:focus{
+            border-color: #888;
+            color:#262626;
+        }
+        #r-result input[type='button']{
+            height: 29px;
+            line-height: 25px;
+            width: 60px;
+            letter-spacing:3px;
+            border:0px;
+            background-color: #3c78c2;
+            text-align: center;
+            outline: none;
+            color:white;
+        }
+        #r-result input[type='button']:hover{
+            opacity: 0.7;
+        }
+        #l-map{
+            width:91%;
+            height: 400px;
+            margin: 0 auto;
+            border: solid 1px #aaa;
+        }
+        .hsla{
+            border:solid 1px red;
+            width:90%;
+            height:300px;
+            margin: 0 auto;
+            background-color:rgba(102,204,255,0.15);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="r-result">
+        <input type="text" id="suggestId" placeholder="请输入地址"/>
+        <input type="button" id="address-search" onclick="localSearch()" value="搜索" onkeypress="localSearch()">
+    </div>
+    <div id="l-map"></div>
+</body>
+</html>
+<script type="text/javascript">
+
+    //初始化地图,设置城市和地图级别,滚轮缩放
+    var map = new BMap.Map("l-map");
+        map.centerAndZoom("北京",12);
+        map.enableScrollWheelZoom(true),
+        map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+        map.setCurrentCity("北京");
+        map.local = new BMap.LocalSearch(map, {
+        renderOptions:{map: map}
+    });
+
+    //浏览器定位到您的位置
+    var geolocation = new BMap.Geolocation();
+    geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            var mk = new BMap.Marker(r.point);
+            map.addOverlay(mk);
+            map.panTo(r.point);
+        }
+        else {
+            alert('抱歉! 未能定位到您的地址');
+        }
+    },{enableHighAccuracy: true})
+
+    //实现搜索
+    function localSearch(){
+        var addressKey=document.getElementById('suggestId').value.trim();
+        map.local.search(addressKey);
+    }
+
+
+    //设置自动完成输入框提示
+    var ac = new BMap.Autocomplete({"input" : "suggestId","location" : map});
+
+    //鼠标放在下拉列表上的事件
+    ac.addEventListener("onhighlight", function(e) {
+        var str = "";
+        var _value = e.fromitem.value;
+        var value = "";
+        if (e.fromitem.index > -1) {
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+        value = "";
+        if (e.toitem.index > -1) {
+            _value = e.toitem.value;
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+    });
+
+    //点击下拉地点触发事件
+    var myValue;
+    ac.addEventListener("onconfirm", function(e) {
+        var _value = e.item.value;
+        myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        map.local.search(myValue);
+    });
+
+
+</script>
